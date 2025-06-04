@@ -1,0 +1,75 @@
+<p-toast />
+
+<div class="flex justify-between p-4 bg-white shadow-lg">
+  <h2 class="text-2xl font-bold">Usuarios</h2>
+  <div class="flex items-center gap-4">
+    <input
+      [(ngModel)]="query"
+      (ngModelChange)="searchUsers($event)"
+      type="text"
+      placeholder="Buscar usuarios..."
+      class="p-2"
+    />
+  </div>
+</div>
+
+<div class="my-auto h-[calc(100vh-12rem)] shadow-lg rounded-lg bg-white">
+  <div class="grid w-auto grid-cols-5 p-4 font-semibold border-b">
+    <div>Nombre</div>
+    <div>Correo</div>
+    <div>Rol</div>
+    <div>Estado</div>
+    <div>Acciones</div>
+  </div>
+
+  <div
+    *ngFor="
+      let user of usersFiltered.length > 0 || query !== ''
+        ? usersFiltered
+        : users
+    "
+    class="grid grid-cols-5 gap-4 p-4 items-center border-b"
+  >
+    <div>
+      <p>
+        {{ user.username }}
+      </p>
+    </div>
+
+    <div>
+      <p>
+        {{ user.email }}
+      </p>
+    </div>
+
+    <div>
+      <p-dropdown
+        [options]="roles"
+        optionLabel="name"
+        optionValue="value"
+        [(ngModel)]="user.roles[0].authority"
+        placeholder="Seleccionar rol"
+        class="w-full"
+      ></p-dropdown>
+    </div>
+
+    <div>
+      <p-dropdown
+        [options]="state"
+        optionLabel="name"
+        optionValue="value"
+        [(ngModel)]="user.enabled"
+        class="w-full text-sm"
+      ></p-dropdown>
+    </div>
+    <td class="flex gap-3 justify-center">
+      <button
+        pButton
+        icon="pi pi-check"
+        severity="success"
+        (click)="updateUser(user)"
+        class="p-button-sm"
+      ></button>
+    </td>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="grid grid-cols-2 xl:grid-cols-3 gap-2">
+  @for (category of categories().slice(0, 6); track $index) {
+  <div
+    [ngClass]="animationClass($index)"
+    [style.animation-delay.s]="$index * 0.2"
+  >
+    <category-button [category]="category.name" />
+  </div>
+  }
+</div>

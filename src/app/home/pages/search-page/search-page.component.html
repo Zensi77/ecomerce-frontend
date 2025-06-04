@@ -1,0 +1,17 @@
+<main class="relative overflow-hidden h-[calc(100vh-11rem)]">
+  <aside class="fixed h-screen md:w-64 overflow-y-auto z-10">
+    <search-filter
+      (rangePrices)="changeRangePrices($event)"
+      (selectedCategory)="changeCategory($event)"
+      (selectedProvider)="changeProvider($event)"
+    />
+  </aside>
+
+  <section class="h-full overflow-y-auto p-4 overflow-hidden md:ml-64">
+    <app-search-result
+      [rangePrices]="rangePrices"
+      [selectedCategory]="selectedCategory"
+      [selectedProvider]="selectedProvider"
+    />
+  </section>
+</main>

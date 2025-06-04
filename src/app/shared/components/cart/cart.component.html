@@ -1,0 +1,182 @@
+<!-- Slide-over backdrop y contenedor -->
+<div
+  *ngIf="showCart"
+  class="fixed inset-0 z-50 overflow-hidden animate__animated animate__fadeIn animate__faster"
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Fondo oscuro y cierre al hacer clic -->
+  <div
+    class="absolute inset-0 bg-gray-500/75 transition-opacity"
+    (click)="changeVisibility()"
+  ></div>
+
+  <!-- Contenedor del panel -->
+  <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+    <!-- Panel lateral -->
+    <div
+      class="pointer-events-auto w-[100vw] sm:w-[400px]"
+      [ngClass]="animationClass()"
+    >
+      <div class="flex h-full flex-col bg-white shadow-xl overflow-y-auto">
+        <!-- Header -->
+        <div class="flex items-start justify-between px-4 py-6 sm:px-6">
+          <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+            Carrito
+          </h2>
+          <button
+            (click)="changeVisibility()"
+            type="button"
+            class="text-gray-400 hover:text-gray-500"
+          >
+            <span class="sr-only">Cerrar</span>
+            <svg
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Contenido del carrito -->
+        <div class="flex-1 px-4 sm:px-6">
+          <ul
+            *ngIf="
+              cart() != null && (cart()?.products)!.length > 0;
+              else notProductMessage
+            "
+            role="list"
+            class="-my-6 divide-y divide-gray-200"
+          >
+            @for (productCart of cart()?.products; track $index) {
+            <li class="flex py-6">
+              <div
+                class="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200"
+              >
+                <img
+                  [src]="productCart?.product?.image"
+                  [alt]="productCart?.product?.name"
+                  class="size-full object-cover"
+                />
+              </div>
+              <div class="ml-4 flex flex-1 flex-col">
+                <div
+                  class="flex justify-between text-base font-medium text-gray-900"
+                >
+                  <h3>
+                    <a
+                      (click)="changeVisibility()"
+                      [routerLink]="['../product', productCart?.product?.id]"
+                      class="hover:text-blue-300 hover:font-semibold transition-all duration-300 ease-in"
+                    >
+                      {{ productCart?.product?.name }}
+                    </a>
+                  </h3>
+                  <p class="ml-4 text-gray-900">
+                    {{ productCart?.product?.price | currency : "EUR" }}
+                  </p>
+                </div>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ productCart?.product?.category?.name }}
+                </p>
+                <div class="flex flex-1 items-end justify-between text-sm mt-2">
+                  <p class="text-gray-500">
+                    Cantidad: {{ productCart?.quantity }}
+                  </p>
+                  <button
+                    (click)="deleteCartItem(productCart)"
+                    type="button"
+                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </li>
+            }
+          </ul>
+
+          <ng-template #notProductMessage>
+            <div
+              class="flex flex-col items-center justify-center text-center py-12 px-4"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="75"
+                height="75"
+                viewBox="0,0,256,256"
+              >
+                <g
+                  fill="#cbcbcb"
+                  fill-rule="nonzero"
+                  stroke="none"
+                  stroke-width="1"
+                  stroke-linecap="butt"
+                  stroke-linejoin="miter"
+                  stroke-miterlimit="10"
+                  stroke-dasharray=""
+                  stroke-dashoffset="0"
+                  font-family="none"
+                  font-weight="none"
+                  font-size="none"
+                  text-anchor="none"
+                  style="mix-blend-mode: normal"
+                >
+                  <g transform="scale(5.12,5.12)">
+                    <path
+                      d="M1,3v12h48v-12zM3,17v31h44v-31zM17.5,20h15c1.38281,0 2.5,1.11719 2.5,2.5c0,1.38281 -1.11719,2.5 -2.5,2.5h-15c-1.38281,0 -2.5,-1.11719 -2.5,-2.5c0,-1.38281 1.11719,-2.5 2.5,-2.5z"
+                    ></path>
+                  </g>
+                </g>
+              </svg>
+              <h3
+                class="text-lg font-semibold mt-3"
+              >
+                Tu carrito está vacío
+              </h3>
+              <p class="mt-2 text-sm text-gray-500">
+                Aún no has añadido ningún producto.
+              </p>
+              <a
+                routerLink="/search"
+                (click)="changeVisibility()"
+                class="mt-4 inline-block text-sm text-indigo-600 hover:underline font-medium"
+              >
+                Explorar productos
+              </a>
+            </div>
+          </ng-template>
+        </div>
+        <!-- Footer -->
+        <div
+          *ngIf="cart() !== null && (cart()?.products)!.length > 0"
+          class="border-t border-gray-200 px-4 py-6 sm:px-6"
+        >
+          <div class="flex justify-between text-base font-medium text-gray-900">
+            <p>Subtotal</p>
+            <p>{{ cart()?.totalPrice | currency : "EUR" }}</p>
+          </div>
+          <div class="mt-6">
+            <a
+              routerLink="/checkout"
+              (click)="changeVisibility()"
+              class="flex items-center justify-center rounded-md bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow hover:bg-indigo-700"
+            >
+              Ir al pago
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

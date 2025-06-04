@@ -1,0 +1,44 @@
+<main class="py-12 px-4">
+  <div
+    class="flex flex-col md:flex-row items-center max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden p-6 md:p-10 gap-8"
+  >
+    <img
+      class="w-full md:w-2/5 h-auto object-contain rounded-xl"
+      src="/images/banner.png"
+      alt="Banner"
+    />
+    <div class="flex flex-col items-center w-full md:w-3/5 space-y-12">
+      <om-typewriter
+        class="flex justify-center w-full"
+        [words]="words"
+        [writeSpeed]="100"
+        [deleteDelay]="2000"
+        [writeDelay]="500"
+        [disableLoop]="true"
+        styleClass="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 bg-clip-text text-transparent text-center animate-gradient-move"
+      ></om-typewriter>
+
+      <section class="w-full text-center space-y-3">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+          Explora nuestras categorías destacadas
+        </h2>
+        <p class="text-sm text-gray-500">
+          Haz clic en una categoría para descubrir más
+        </p>
+        <app-categories-layer />
+      </section>
+    </div>
+  </div>
+
+  <section
+    class="max-w-7xl mx-auto mt-16 flex flex-col items-center justify-center text-center px-4 space-y-4"
+  >
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+      Explora nuestros productos destacados
+    </h2>
+    <p class="text-sm text-gray-500">
+      Haz clic en un producto para ver más detalles
+    </p>
+    <app-products-layer />
+  </section>
+</main>

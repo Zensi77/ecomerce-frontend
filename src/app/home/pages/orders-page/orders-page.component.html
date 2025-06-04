@@ -1,0 +1,161 @@
+<p-toast />
+<p-confirmpopup />
+
+<section class="bg-gray-100 antialiased pt-20 min-h-screen w-full">
+  <div class="mx-auto max-w-7xl px-4 2xl:px-0">
+    <div>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+      >
+        <h2 class="text-2xl font-semibold text-gray-900">
+          Mis pedidos
+          <p class="text-sm text-gray-500 mt-1">
+            Aquí puedes ver el estado de tus pedidos y detalles de cada uno.
+          </p>
+        </h2>
+        <div
+          class="mt-6 sm:mt-0 flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0"
+        >
+          <div>
+            <p-dropdown
+              [options]="orderStatusOptions"
+              [(ngModel)]="selectedStatus"
+              (onChange)="filterOrders()"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Estado del pedido"
+              styleClass="min-w-[12rem]"
+              [style]="{ width: '100%' }"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flow-root">
+        <div class="divide-y divide-gray-200">
+          @for (order of filteredOrders(); track $index) {
+          <div
+            class="flex flex-wrap items-center gap-y-4 py-6 my-4 px-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            [ngClass]="animationClass($index)"
+            [style.animation-delay.s]="$index * 0.2"
+          >
+            <dl class="w-full sm:w-1/4 xl:w-auto xl:flex-1">
+              <dt class="text-sm font-medium text-gray-500">ID pedido:</dt>
+              <dd class="mt-1 text-base font-semibold text-gray-900">
+                #{{ order.id | slice : 4 : 18 }}
+              </dd>
+            </dl>
+
+            <dl class="w-1/2 sm:w-1/4 xl:w-auto xl:flex-1">
+              <dt class="text-sm font-medium text-gray-500">
+                Fecha de pedido:
+              </dt>
+              <dd class="mt-1 text-base font-semibold text-gray-900">
+                {{ order.createdAt | date : "MMM d, y" }}
+              </dd>
+            </dl>
+
+            <dl class="w-1/2 sm:w-1/4 xl:w-auto xl:flex-1">
+              <dt class="text-sm font-medium text-gray-500">Total:</dt>
+              <dd class="mt-1 text-base font-semibold text-gray-900">
+                {{ order.totalPrice | currency : "EUR" }}
+              </dd>
+            </dl>
+
+            <dl class="w-1/2 sm:w-1/4 xl:w-auto xl:flex-1">
+              <dt class="text-sm font-medium text-gray-500">Método de pago:</dt>
+              <dd class="mt-1 text-base font-semibold text-gray-900">
+                {{ order.paymentMethod | paymentMethod }}
+              </dd>
+            </dl>
+
+            <div class="lg:flex justify-between w-full">
+              <dl
+                class="w-1/2 sm:w-1/4 xl:w-auto xl:flex-1 flex items-center gap-2"
+              >
+                <dt class="text-sm font-medium text-gray-500">Estado:</dt>
+                <span
+                  class="text-base font-semibold text-gray-900 flex items-center gap-2"
+                >
+                  <i
+                    [appOrderStatus]="order.status"
+                    class="p-2 rounded-full"
+                  ></i>
+                  {{ order.status | titlecase }}
+                </span>
+              </dl>
+
+              <div
+                class="w-full grid justify-items-center sm:grid-cols-2 lg:flex lg:w-[100%] xl:items-center lg:justify-end gap-4 mt-4 sm:mt-0"
+              >
+                <p-button
+                  *ngIf="order.status !== 'CANCELLED'"
+                  (onClick)="cancelOrder($event, order.id)"
+                  label="Cancelar pedido"
+                  icon="pi pi-times"
+                  severity="danger"
+                  [outlined]="true"
+                ></p-button>
+                <p-button
+                  (onClick)="viewOrderDetails(order.items)"
+                  label="Ver detalles"
+                  icon="pi pi-eye"
+                  severity="info"
+                  [outlined]="true"
+                ></p-button>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p-dialog
+  [(visible)]="showOrderDetails"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-shadow-24 rounded-lg"
+>
+  <ul>
+    @for (productCart of orderToShow; track $index) {
+    <li class="flex py-6 border-b border-gray-200 last:border-0">
+      <div
+        class="w-24 h-24 shrink-0 overflow-hidden rounded-md border border-gray-200"
+      >
+        <img
+          [src]="productCart?.product?.image"
+          [alt]="productCart?.product?.name"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div class="ml-4 flex flex-1 flex-col justify-between">
+        <div class="flex justify-between text-base font-medium text-gray-900">
+          <h3>
+            <a
+              [routerLink]="['../product', productCart?.product?.id]"
+              class="hover:text-indigo-600 transition-colors duration-300"
+            >
+              {{ productCart?.product?.name }}
+            </a>
+          </h3>
+          <p class="ml-4 text-gray-900">
+            {{ productCart?.product?.price | currency : "EUR" }}
+          </p>
+        </div>
+        <p class="mt-1 text-sm text-gray-500">
+          {{ productCart?.product?.category?.name }}
+        </p>
+        <div class="flex justify-between items-end text-sm mt-2">
+          <p class="text-gray-500">Cantidad: {{ productCart?.quantity }}</p>
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+</p-dialog>

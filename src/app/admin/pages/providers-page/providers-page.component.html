@@ -1,0 +1,87 @@
+<p-toast />
+
+<div class="flex justify-between p-4 bg-white shadow-lg">
+  <h2 class="text-2xl font-bold">Proveedores</h2>
+  <div>
+    <button
+      pButton
+      icon="pi pi-plus"
+      label="Agregar Proveedor"
+      (click)="onAddProvider()"
+      class="mx-4 p-button-sm"
+    ></button>
+    <input
+      [(ngModel)]="query"
+      (ngModelChange)="searchProviders()"
+      type="text"
+      placeholder="Buscar proveedores..."
+      class="p-2"
+    />
+  </div>
+</div>
+<div class="my-auto overflow-auto shadow-lg rounded-lg">
+  <p-table
+    [value]="
+      providersFiltered.length > 0 || query !== ''
+        ? providersFiltered
+        : providers()
+    "
+    editMode="cell"
+    class="p-datatable-sm overflow-auto"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nombre</th>
+        <th>Direccion</th>
+        <th class="flex justify-end">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-provider let-editing="editing">
+      <tr>
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                type="text"
+                [(ngModel)]="provider.name"
+                (keydown.enter)="updateProvider(provider)"
+                (blur)="updateProvider(provider)"
+                class="p-inputtext-sm"
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ provider.name }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                type="text"
+                [(ngModel)]="provider.address"
+                (keydown.enter)="updateProvider(provider)"
+                (blur)="updateProvider(provider)"
+                class="p-inputtext-sm"
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ provider.address }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <td class="flex gap-3 justify-end">
+          <button
+            pButton
+            icon="pi pi-trash"
+            severity="danger"
+            (click)="onDeleteProvider(provider.id)"
+            class="p-button-sm"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

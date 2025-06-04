@@ -1,0 +1,59 @@
+<div class="fixed top-0 w-full px-4 py-1 card shadow-3xl z-100">
+  <p-menubar
+    [model]="items"
+    [baseZIndex]="1000"
+    class="bg-white dark:bg-gray-800"
+  >
+    <ng-template #item let-item let-root="root">
+      <a
+        pRipple
+        class="flex items-center p-menubar-item-link"
+        [routerLink]="item.routerLink"
+        routerLinkActive="bg-green-300/70 rounded-md text-primary shadow-2"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i *ngIf="item.icon" [ngClass]="item.icon + ' mr-2'"></i>
+        <span>{{ item.label }}</span>
+        <p-badge
+          *ngIf="item.badge"
+          [ngClass]="{ 'ml-auto': !root, 'ml-2': root }"
+          [value]="item.badge"
+        />
+        <span
+          *ngIf="item.shortcut"
+          class="p-1 ml-auto text-xs border rounded border-surface bg-emphasis text-muted-color"
+          >{{ item.shortcut }}</span
+        >
+        <i
+          *ngIf="item.items"
+          [ngClass]="['ml-auto pi', root ? 'pi-angle-down' : 'pi-angle-right']"
+        ></i>
+      </a>
+    </ng-template>
+    <ng-template #end>
+      <div class="flex items-center gap-4">
+        <i
+          class="cursor-pointer"
+          tabindex="0"
+          [ngClass]="isLogged()"
+          (click)="actionLogged()"
+        ></i>
+
+        <p-overlay-badge
+          [value]="(cart()?.products)!.length"
+          [style]="{ 'margin-left': '1rem' }"
+          [severity]="'success'"
+          [badgeDisabled]="!cart()?.products?.length"
+          [badgeSize]="'small'"
+        >
+          <i
+            class="cursor-pointer pi pi-shopping-cart"
+            style="font-size: 1.2rem; padding: 0"
+            (click)="actionCart()"
+          ></i>
+        </p-overlay-badge>
+        <app-cart [showCart]="showCart" (showCartChange)="showCartChange()" />
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
