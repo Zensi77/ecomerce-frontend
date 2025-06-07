@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
 
-  base_url: 'http://54.84.71.194:30080/api/v1/',
+  base_url: 'https://ecomerce-backend-4vw4.onrender.com/api/v1/',
 
   sign_in: 'user/login',
   sign_up: 'user/register',

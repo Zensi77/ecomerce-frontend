@@ -1,4 +1,4 @@
-name: Build and Deploy Nestjs Docker Image
+name: Build and Deploy Angular Docker Image
 
 on:
   push:
