@@ -41,6 +41,8 @@ export class ProductDialogComponent implements OnChanges {
   imagePreviewUrl: string | null = null;
 
   ngOnChanges(): void {
+    this.productForm.reset();
+
     if (this.product != null) {
       this.productForm.patchValue({
         name: this.product.name,

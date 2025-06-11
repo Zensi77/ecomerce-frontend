@@ -1,4 +1,4 @@
-<section class="bg-white py-8 antialiased md:py-16">
+<section class="bg-white py-8 antialiased md:py-16 min-h-screen">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl">
       Shopping Cart
@@ -35,6 +35,7 @@
               >
                 <div class="flex items-center">
                   <button
+                    [disabled]="item.quantity <= 1"
                     (click)="modifyQuantity(item, -1)"
                     type="button"
                     id="decrement-button"
