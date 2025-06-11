@@ -6,11 +6,20 @@ export const isAdminGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAdmin) {
-    router.navigateByUrl('/admin');
-    return true;
-  } else {
-    router.navigateByUrl('/');
-    return false;
-  }
+  return new Promise((resolve) => {
+    const checkUser = () => {
+      const isLoading = authService.loading();
+      const user = authService.user();
+
+      if (isLoading) {
+        setTimeout(checkUser, 100);
+      } else if (user) {
+        resolve(true);
+      } else {
+        router.navigateByUrl('/auth/sign-in');
+        resolve(false);
+      }
+    };
+    checkUser();
+  });
 };

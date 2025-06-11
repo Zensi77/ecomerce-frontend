@@ -39,6 +39,10 @@
     <p class="text-sm text-gray-500">
       Haz clic en un producto para ver más detalles
     </p>
+    @defer (on viewport) {
     <app-products-layer />
+    } @placeholder {
+    <h1>Cargando productos...</h1>
+    }
   </section>
 </main>
