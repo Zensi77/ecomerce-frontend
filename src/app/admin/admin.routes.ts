@@ -27,13 +27,6 @@ export default [
             (m) => m.ProvidersPageComponent
           ),
       },
-      {
-        path: 'users',
-        loadComponent: () =>
-          import('./pages/users-page/users-page.component').then(
-            (m) => m.UsersPageComponent
-          ),
-      },
     ],
   },
 ];

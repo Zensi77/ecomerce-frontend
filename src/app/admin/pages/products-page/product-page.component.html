@@ -86,6 +86,7 @@
   [style]="{ width: '70%' }"
   [responsive]="true"
   [breakpoints]="{ '960px': '90vw' }"
+  (onHide)="productToEdit = null; showProductDialog = false"
 >
   <product-dialog [product]="productToEdit" (closeDialog)="actionCompleted()" />
 </p-dialog>

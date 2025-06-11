@@ -56,14 +56,14 @@ import { HomeService } from '../../services/home.service';
           type="button"
           aria-label="Añadir a favoritos"
           class="w-full text-red-500 lg:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          [ngClass]="{
-            'animate__animated animate__heartBeat': product.liked,
-            'text-red-500': product.liked,
-          }"
           data-tooltip-target="favourites-tooltip-3"
         >
           <svg
             class="h-5 w-5"
+            [ngClass]="{
+            'animate__animated animate__heartBeat': product.liked,
+            'text-red-500': product.liked,
+          }"
             xmlns="http://www.w3.org/2000/svg"
             [attr.fill]="product.liked ? 'currentColor' : 'none'"
             viewBox="0 0 24 24"
@@ -90,12 +90,12 @@ import { HomeService } from '../../services/home.service';
           (click)="addToCart(product.id)"
           type="button"
           class="w-full grow-1 lg:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 sm:px-5 py-2.5 cursor-pointer text-sm font-medium text-white hover:bg-primary-700 transition-colors duration-300 "
-          [ngClass]="{
-            'animate__animated animate__heartBeat ': buttonClicked()
-          }"
         >
           <svg
             class="h-5 w-5"
+            [ngClass]="{
+              'animate__animated animate__heartBeat ': buttonClicked()
+            }"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

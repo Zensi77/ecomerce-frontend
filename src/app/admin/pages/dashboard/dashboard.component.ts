@@ -53,11 +53,6 @@ export class DashboardComponent implements OnInit {
         icon: 'pi pi-fw pi-users',
         routerLink: './providers',
       },
-      {
-        label: 'Usuarios',
-        icon: 'pi pi-fw pi-users',
-        routerLink: './users',
-      },
     ];
   }
 

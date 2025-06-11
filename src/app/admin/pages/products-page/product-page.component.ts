@@ -77,7 +77,7 @@ export class ProductPageComponent implements OnInit {
   }
 
   onScroll(index: number) {
-    const threshold = 10; // cuántos elementos antes del final
+    const threshold = 15; // cuántos elementos antes del final
     const itemsLoaded = this.products.length;
 
     if (
