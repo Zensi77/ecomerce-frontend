@@ -35,7 +35,7 @@ export default class HomePageComponent {
         : this.hora < 18
         ? 'Buenas tardes'
         : 'Buenas noches'
-    }, `,
+    } `,
     'Bienvenido a TecnoShop',
     'Encuentra lo que buscas',
   ];

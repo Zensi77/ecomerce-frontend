@@ -125,20 +125,25 @@ export class ProductCardComponent {
   buttonClicked = signal(false);
 
   addToCart(productId: string) {
-    this.buttonClicked.set(true);
-    setTimeout(() => {
-      this.buttonClicked.set(false);
-    }, 1000);
-
     if (this._sharedService.cart() === null) {
       this._router.navigate(['/auth/sign-in']);
       return;
     }
 
+    this.buttonClicked.set(true);
+    setTimeout(() => {
+      this.buttonClicked.set(false);
+    }, 1000);
+
     this._sharedService.addProductToCart(productId);
   }
 
   updateWishList(productId: string) {
+    if (this._sharedService.cart() === null) {
+      this._router.navigate(['/auth/sign-in']);
+      return;
+    }
+
     this.product.liked = !this.product.liked;
     this._homeService.modifyWishList(productId);
   }

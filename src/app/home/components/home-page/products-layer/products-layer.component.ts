@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../../../interfaces/Data.interface';
 import { HomeService } from '../../../services/home.service';
 import { ProductCardComponent } from '../../../ui/product-card/product-card.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-products-layer',
@@ -13,6 +14,7 @@ import { ProductCardComponent } from '../../../ui/product-card/product-card.comp
     CommonModule,
     ProductCardComponent,
     ProductCardComponent,
+    SkeletonModule,
   ],
   templateUrl: './products-layer.component.html',
   styles: ``,

@@ -1,7 +1,20 @@
 <div
   class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 >
-  @for (prod of products; track $index) {
+  @if (!products || products.length === 0) {
+  <div
+    class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-full"
+  >
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+    <p-skeleton width="100%" height="100%" styleClass="mr-2" />
+  </div>
+  } @for (prod of products; track $index) {
   <product-card [product]="prod" />
   }
 </div>

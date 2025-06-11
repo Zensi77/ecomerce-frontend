@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { ProductName } from '../../home/interfaces/ProductName.interface';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/services/auth.service';
 import { CartResponse, ProductCart } from '../interfaces/data-shared.interface';
 import Swal from 'sweetalert2';
