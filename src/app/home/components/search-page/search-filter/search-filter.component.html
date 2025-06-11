@@ -53,7 +53,9 @@
           <p-chip
             [removable]="true"
             (onRemove)="
-              selectedCategoryValue = null; selectedCategory.emit(null)
+              selectedCategoryValue = null;
+              selectedCategory.emit(null);
+              removeParams('category')
             "
             class="animate__animated animate__fadeIn"
           >
@@ -64,7 +66,9 @@
           <p-chip
             [removable]="true"
             (onRemove)="
-              selectedProviderValue = null; selectedProvider.emit(null)
+              selectedProviderValue = null;
+              selectedProvider.emit(null);
+              removeParams('provider')
             "
             class="animate__animated animate__fadeIn"
           >

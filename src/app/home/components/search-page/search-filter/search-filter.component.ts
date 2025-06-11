@@ -14,7 +14,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { Slider } from 'primeng/slider';
 import { Select } from 'primeng/select';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chip } from 'primeng/chip';
 import { CommonModule } from '@angular/common';
 import { Category, Provider } from '../../../interfaces/Data.interface';
@@ -29,6 +29,7 @@ import { HomeService } from '../../../services/home.service';
 export class SearchFilterComponent implements OnInit {
   private readonly _homeService = inject(HomeService);
   private readonly _route = inject(ActivatedRoute);
+  private readonly _router = inject(Router);
 
   @Output() selectedCategory = new EventEmitter<Category | null>();
   @Output() selectedProvider = new EventEmitter<Provider[] | null>();
@@ -81,6 +82,13 @@ export class SearchFilterComponent implements OnInit {
     this.selectedCategory.emit(this.selectedCategoryValue);
     this.selectedProvider.emit(this.selectedProviderValue);
     this.rangePrices.emit(this.rangePricesValue);
+  }
+  removeParams(param: string) {
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: { [param]: null },
+      queryParamsHandling: 'merge',
+    });
   }
 
   toggleMenu() {

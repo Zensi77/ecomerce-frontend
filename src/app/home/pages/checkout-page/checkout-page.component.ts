@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { SharedDataService } from '../../../shared/services/shared-data.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Dialog } from 'primeng/dialog';
 import { ProgressSpinner } from 'primeng/progressspinner';
@@ -25,6 +25,7 @@ import Swal from 'sweetalert2';
 export default class CheckoutPageComponent {
   private readonly _homeService = inject(HomeService);
   private readonly _sharedService = inject(SharedDataService);
+  private readonly router = inject(Router);
 
   cart = computed(() => this._sharedService.cart());
 
@@ -35,6 +36,13 @@ export default class CheckoutPageComponent {
     this._homeService.getRandomProducts(3).subscribe((res: Product[]) => {
       this.randomProducts = res;
     });
+
+    if (
+      !this._sharedService.cart() ||
+      this._sharedService.cart()?.products.length === 0
+    ) {
+      this.router.navigate(['/']);
+    }
   }
 
   animationClass(index: number) {
@@ -89,6 +97,8 @@ export default class CheckoutPageComponent {
           animate__faster
         `,
         },
+      }).then(() => {
+        this.router.navigateByUrl('/');
       });
     }, 2000);
   }
